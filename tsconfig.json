@@ -1,0 +1,32 @@
+{
+    // 项目选项，定义项目运行时的期望
+    "compilerOptions": {
+        "target": "ES3", // 目标语言的版本
+        "noImplicitAny": true, // 不允许隐式的any类型
+        "strictBindCallApply": true, // 严格的bind/call/apply/检查
+        "removeComments": true, // 删除注释
+        "sourceMap": false, // 生成目标文件的sourceMap文件
+
+        "noImplicitThis": true, // 不允许this有隐式的any类型
+        "moduleResolution": "Node", // 模块解析策略, ts默认用的node解析策略，即相对的方式导入
+
+        "declaration": true, // 生成声明文件， 开启后会自动生成声明文件
+        "declarationMap": false, // 为声明文件生成sourceMap
+
+        "rootDir": "src", // 指定输出文件的目录（用于输出），用于控制输出文件的目录结构
+
+        "importHelpers": true, // 通过tslib引入helper函数，文件必须是模块
+
+        "pretty": true, // 使用颜色和上下文对错误和消息进行样式化，默认情况下这是启用的，这为您提供了一个从编译器获得较少简洁、单色消息的机会。
+    },
+    /*
+    指定与编译中包含的文件匹配的全局模式列表。
+    如果tsconfig.json中没有“files”或“include”属性,
+    编译器默认包含包含目录和子目录中的所有文件，但“exclude”指定的文件除外。
+    需要TypeScript 2.0或更高版本。
+    */
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": []
+}

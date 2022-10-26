@@ -1,0 +1,1 @@
+一个轻量级图形库，为Apache ECharts提供2d绘图。
