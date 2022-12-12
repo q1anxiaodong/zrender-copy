@@ -302,10 +302,57 @@ class Transformable {
     static getLocalTransform(target: Transformable, m: matrix.MatrixArray): matrix.MatrixArray {
         m = m || [];
 
-        
+        const ox = target.originX || 0;
+        const oy = target.originY || 0;
+        const sx = target.scaleX;
+        const sy = target.scaleY;
+        const ax = target.anchorX;
+        const ay = target.anchorY;
+        const rotation = target.rotation || 0;
+        const x = target.x;
+        const y = target.y;
+        const skewX = target.skewX ? Math.tan(target.skewX) : 0;
+        // zrender用的另外一种（右手）坐标系, y轴被反转了
+        const skewY = target.skewY ? Math.tan(-target.skewY) : 0;
+
+        if(ox || oy || ax || ay) {
+            const dx = ox + ax;
+            const dy = oy + ay;
+            m[4] = -dx * sx - skewX * dy * sy;
+            m[5] = -dy * sy - skewY * dx + sx;
+        } else {
+            m[4] = m[5] = 0;
+        }
+        // scale
+        m[0] = sx;
+        m[3] = sy;
+        // skew
+        m[1] = skewY * sx;
+        m[2] = skewX * sy;
+        // Apply rotation
+        rotation && matrix.rotate(m, m, rotation);
+
+        // 从原点往回变换，并应用变换
+        m[4] += ox + x;
+        m[5] += oy + y;
+
         return m;
     }
-
+    private static initDefaultProps = (function () {
+        const proto = Transformable.prototype;
+        proto.scaleX = 
+        proto.scaleY =
+        proto.globalScaleRatio = 1;
+        proto.x = 
+        proto.y = 
+        proto.originX = 
+        proto.originY = 
+        proto.skewX = 
+        proto.skewY = 
+        proto.rotation = 
+        proto.anchorX = 
+        proto.anchorY = 0; 
+    })();
     
 }
 export const TRANSFORMABLE_PROPS = [
